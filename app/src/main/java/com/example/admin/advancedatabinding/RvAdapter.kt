@@ -12,7 +12,8 @@ import java.util.*
 /**
  * Created by zjw on 2018/8/16.
  */
-class RvAdapter(val dataBinding: ViewDataBinding, private val context:Context) : RecyclerView.Adapter<RvAdapter.RvHolder<ViewDataBinding>>() {
+class RvAdapter( private val context:Context) : RecyclerView.Adapter<RvAdapter.RvHolder<ViewDataBinding>>() {
+
     private var user:MutableList<User> = mutableListOf()
     private val random:Random=Random()
     private val TYPE_SHOW=0xa0
@@ -23,12 +24,11 @@ class RvAdapter(val dataBinding: ViewDataBinding, private val context:Context) :
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RvHolder<ViewDataBinding> {
 
-        if (viewType==TYPE_SHOW){
-            return RvHolder(DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.rv_item,parent,false))
-        }else if (viewType==TYPE_HIDE){
-            return RvHolder(DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.rv_item_hide,parent,false))
+        return if (viewType==TYPE_SHOW){
+             RvHolder(DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.rv_item,parent,false))
+        }else{
+             RvHolder(DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.rv_item_hide,parent,false))
         }
-        return RvHolder(dataBinding)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -48,7 +48,7 @@ class RvAdapter(val dataBinding: ViewDataBinding, private val context:Context) :
         return user.size
     }
 
-    inner class RvHolder<out T : ViewDataBinding>(private val binding: T) : RecyclerView.ViewHolder(binding.root) {
+    inner class RvHolder< T : ViewDataBinding>(private val binding: T) : RecyclerView.ViewHolder(binding.root) {
         fun setData(position: Int) {
             if (user.size>0){
                 binding.setVariable(BR.item, user[position])

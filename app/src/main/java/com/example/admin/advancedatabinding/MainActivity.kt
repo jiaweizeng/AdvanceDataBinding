@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         mainActivity=DataBindingUtil.setContentView(this,R.layout.activity_main)
         mainActivity.rvAdvance.setHasFixedSize(true)
         mainActivity.rvAdvance.layoutManager=LinearLayoutManager(this)
-        rvAdapter=RvAdapter(mainActivity,this)
+        rvAdapter=RvAdapter(this)
         mainActivity.rvAdvance.adapter=rvAdapter
         val list = mutableListOf<User>()
         list.add(User("fdaa",11,true))
